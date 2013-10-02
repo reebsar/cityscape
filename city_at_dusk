@@ -1,0 +1,85 @@
+//Click on the skyscrapers to save energy! -aa
+
+int r = 255;
+int g = 201;
+int b = 0;
+
+
+void setup() {
+  size (800, 800);
+  stroke(255);
+  frameRate(1); //change building sizes
+}
+
+//custom function for gradient (sunset) background
+
+void setGradient() {
+
+  for ( float i=0 ; i <= height; i++) {
+    float inter = map(i, 0, height, 0, 1);
+    
+    //map(value[the incoming value to be converted], 
+    //start1 [lower bound of the value's current range],
+    //stop1 [upper bound of the value's current range],
+    //start2  [lower bound of the value's target range],
+    //stop2  [upper bound of the value's target range])
+
+    println("inter is" + inter); //test
+    
+    color purple= color(#3D165C);
+    color red = color(#FF4A21);
+    color c = lerpColor(purple, red, inter);
+    stroke(c);
+    line(0, i, width, i);
+  }
+} 
+void draw () {
+
+  //refresh background each frame
+  setGradient (); 
+
+  //draw buildings
+  Building ();
+}
+
+//turn off lights when mouse clicked 
+
+void mousePressed() {
+  if (r==255 && g==201) { //why does 'if' need == 
+    r=0;
+    g=0;
+  }
+  else {
+    r=255;
+    g=201;
+  }
+}
+
+//custom function for buildings
+void Building () {
+
+  for (int i=0; i<800; i=i+150) {
+
+    float Bwidth = random(100, 250);
+    float Bheight = random(300, 700);
+    fill(#06002E); //midnight blue
+    stroke (0);
+    strokeWeight(4);
+    rect( i, height - Bheight, Bwidth, Bheight);
+
+    // windows on each skyscraper
+
+    println("building right corner is" + i);//test
+
+    for (float x=i+10; x < i+Bwidth-10; x=x+30) { 
+
+      println(x);//test
+      for ( float y= (height - Bheight+10); y < (height-30); y = y+30) { 
+        fill (r, g, b);
+        stroke(0);
+        strokeWeight(1);
+        rect(x, y, 10, 20);
+      }
+    }
+  }
+}
